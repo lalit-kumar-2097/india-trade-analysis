@@ -33,7 +33,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.0.103',
     'localhost:8000',
-    '*'
+    '192.168.1.45',
+    'india-trade-analysis.onrender.com'
 ]
 
 
