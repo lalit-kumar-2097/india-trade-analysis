@@ -1,53 +1,4 @@
-# import pandas as pd
-# from pmdarima import auto_arima
-# from statsmodels.tsa.statespace.sarimax import SARIMAX
-
-# def forecast_with_sarima(df, periods=3):
-#     # Prepare data
-#     df = df[['month_curr', 'value_curr']].copy()
-#     df.rename(columns={'month_curr': 'ds', 'value_curr': 'y'}, inplace=True)
-#     df['ds'] = pd.to_datetime(df['ds'])
-#     df = df.sort_values('ds')
-#     df.set_index('ds', inplace=True)
-#     df['y']= pd.to_numeric(df['y'], errors='coerce').fillna(0)
-    
-#     # ✅ Defensive check
-#     if df.shape[0] < 12 or df['y'].sum() == 0:
-#         raise ValueError("Not enough data points or all-zero values to train SARIMA.")
-
-#     # Fit model using auto_arima to select best (p,d,q)(P,D,Q)s
-#     stepwise_model = auto_arima(
-#         df['y'],
-#         seasonal=True,
-#         m=12,  # monthly data
-#         trace=False,
-#         suppress_warnings=True,
-#         error_action='ignore'
-#     )
-
-#     # Fit final SARIMAX model
-#     model = SARIMAX(df['y'], order=stepwise_model.order, seasonal_order=stepwise_model.seasonal_order)
-#     model_fit = model.fit(disp=False)
-
-#     # Forecast next N months
-#     forecast = model_fit.get_forecast(steps=periods)
-#     forecast_index = pd.date_range(start=df.index[-1] + pd.offsets.MonthBegin(), periods=periods, freq='M')
-#     pred = forecast.predicted_mean
-#     conf_int = forecast.conf_int()
-
-#     # Format output like Prophet
-#     result = pd.DataFrame({
-#         "ds": forecast_index,
-#         "yhat": pred.values,
-#         "yhat_lower": conf_int.iloc[:, 0].values,
-#         "yhat_upper": conf_int.iloc[:, 1].values
-#     })
-
-#     return result
-# 12 July 2025
-
-
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_absolute_error, root_mean_squared_error
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -72,7 +23,7 @@ def forecast_with_sarima(df, validation=False):
         actuals = test_df['y'].tolist()
 
         mae = mean_absolute_error(actuals, predictions)
-        rmse = mean_squared_error(actuals, predictions, squared=False)
+        rmse = root_mean_squared_error(actuals, predictions)
 
         return {
             "mae": mae,
