@@ -11,6 +11,7 @@ contourpy
 convertdate
 cycler
 Cython
+numpy>=1.21
 deprecation==2.1.0
 Django
 django-cors-headers==4.7.0
@@ -32,14 +33,12 @@ kiwisolver
 matplotlib==3.9.2
 munkres==1.1.4
 narwhals==1.45.0
-numpy 
 olefile
 packaging
 pandas 
 patsy 
 Pillow
 plotly==6.2.0
-pmdarima
 postgrest==1.1.1
 prophet 
 pycparser
@@ -76,4 +75,5 @@ xgboost
 zipp
 zstandard==0.23.0
 gunicorn
+pmdarima
 # Any other libraries you're using
