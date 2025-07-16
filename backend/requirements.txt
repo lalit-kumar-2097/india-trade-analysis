@@ -33,7 +33,7 @@ pytz
 tqdm
 
 # Optional scientific libraries (include only if used)
-PyMeeus
+pymeeus
 patsy
 matplotlib
 plotly
