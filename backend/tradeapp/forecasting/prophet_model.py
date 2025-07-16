@@ -1,57 +1,5 @@
-# # from prophet import Prophet
-# # import pandas as pd
 
-# # def forecast_trade(df: pd.DataFrame, periods: int = 3):
-# #     if df.empty:
-# #         return pd.DataFrame()
-
-# #     # Prepare the data
-# #     data = df[['month_curr', 'value_curr']].copy()
-# #     data = data.rename(columns={'month_curr': 'ds', 'value_curr': 'y'})
-
-# #     # Prophet expects datetime + numeric
-# #     data['ds'] = pd.to_datetime(data['ds'])
-# #     data['y'] = pd.to_numeric(data['y'], errors='coerce').fillna(0)
-
-# #     # Filter out rows with y=0 (optional)
-# #     data = data[data['y'] > 0]
-# #     if data.shape[0] < 2:
-# #         return pd.DataFrame()  # Not enough data to forecast
-
-# #     # Train model
-# #     model = Prophet()
-# #     model.fit(data)
-
-# #     # Forecast next N months
-# #     future = model.make_future_dataframe(periods=periods, freq='M')
-# #     forecast = model.predict(future)
-
-# #     result = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(periods)
-# #     result['yhat'] = result['yhat'].round(2)
-# #     result['yhat_lower'] = result['yhat_lower'].round(2)
-# #     result['yhat_upper'] = result['yhat_upper'].round(2)
-    
-# #     return result
-
-
-# from prophet import Prophet
-# import pandas as pd
-
-# def forecast_with_prophet(df, periods=3):
-#     df = df[['month_curr', 'value_curr']].copy()
-#     df.rename(columns={'month_curr': 'ds', 'value_curr': 'y'}, inplace=True)
-#     df['ds'] = pd.to_datetime(df['ds'])
-#     df['y'] = pd.to_numeric(df['y'])
-
-#     model = Prophet()
-#     model.fit(df)
-
-#     future = model.make_future_dataframe(periods=periods, freq='M')
-#     forecast = model.predict(future)
-
-#     return forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(periods)
-
-
+from sklearn.metrics import root_mean_squared_error
 from prophet import Prophet
 import pandas as pd
 
@@ -90,7 +38,9 @@ def forecast_with_prophet(df, validation=False):
         y_true = test_df['y'].values
         y_pred = result['yhat'].values
         mae = mean_absolute_error(y_true, y_pred)
-        rmse = mean_squared_error(y_true, y_pred, squared=False)
+        rmse = root_mean_squared_error(y_true, y_pred)
+
+        # rmse = mean_squared_error(y_true, y_pred, squared=False)
         return {
             "mae": float(mae),
             "rmse": float(rmse),
