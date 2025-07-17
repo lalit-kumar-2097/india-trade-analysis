@@ -1,0 +1,8 @@
+footer {
+    text-align: center;
+    padding: 20px;
+    background-image: linear-gradient(to right, rgb(4 8 18), rgb(48, 97, 215));
+    color: white;
+    margin-top: auto;    
+    width: 100%;
+}
