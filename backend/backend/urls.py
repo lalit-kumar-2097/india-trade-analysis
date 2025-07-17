@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('tradeapp.urls')),  # Add this line
+    path('api/', include('tradeapp.urls')),
+    path("ping/", lambda request: JsonResponse({"status": "ok"})),
 ]
